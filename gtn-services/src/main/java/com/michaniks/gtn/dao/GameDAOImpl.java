@@ -1,15 +1,15 @@
-package com.michaniks.gtn.services.game;
+package com.michaniks.gtn.dao;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.ejb.Singleton;
 
-import com.michaniks.gtn.services.game.classes.Game;
-import com.michaniks.gtn.services.game.classes.NumberGenerator;
+import com.michaniks.gtn.entities.Game;
+import com.michaniks.gtn.helpers.NumberGenerator;
 
 @Singleton
-public class GamesDAOImpl implements GameDAO {
+public class GameDAOImpl implements GameDAO {
 	
 	private Map<Integer, Game> games = new HashMap<>();
 
@@ -22,8 +22,8 @@ public class GamesDAOImpl implements GameDAO {
 	}
 
 	@Override
-	public Map<Integer, Game> getGames() {
-		return games;
+	public Game getGame(Integer id) {
+		return games.get(id);
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.michaniks.gtn.services.game.classes;
+package com.michaniks.gtn.entities;
 
 public class Guess {
 	
@@ -28,13 +28,13 @@ public class Guess {
 	public void setGuessedNumber(int guessedNumber) {
 		this.guessedNumber = guessedNumber;
 	}
-
-	public void setCorrectNumbers(int correctNumbers) {
-		this.correctNumbers = correctNumbers;
+	
+	public void incrementCorrectNumbers() {
+		this.correctNumbers++;
 	}
 
-	public void setCorrectPositions(int correctPositions) {
-		this.correctPositions = correctPositions;
+	public void incrementCorrectPositions() {
+		correctPositions++;
 	}
 
 	public Integer getGameId() {

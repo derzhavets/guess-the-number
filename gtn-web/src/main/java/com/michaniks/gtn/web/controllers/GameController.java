@@ -9,8 +9,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.michaniks.gtn.services.game.GameService;
-import com.michaniks.gtn.services.game.classes.Guess;
+import com.michaniks.gtn.entities.Game;
+import com.michaniks.gtn.entities.Guess;
+import com.michaniks.gtn.services.GameService;
 
 @Path("/game")
 public class GameController {
@@ -21,7 +22,9 @@ public class GameController {
 	@Path("/new/{playerName}")
 	@GET
 	public Integer createNewGame(@PathParam("playerName") String playerName) {
-		return gameService.createGame(playerName).getId();
+		Game g = gameService.createGame(playerName);
+		System.out.println(g);
+		return g.getId();
 	}
 	
 	@Path("/makeGuess")

@@ -1,17 +1,20 @@
-package com.michaniks.gtn.services.game;
+package com.michaniks.gtn.services;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.michaniks.gtn.services.game.classes.Game;
-import com.michaniks.gtn.services.game.classes.Guess;
-import com.michaniks.gtn.services.game.classes.GuessChecker;
+import com.michaniks.gtn.dao.GameDAO;
+import com.michaniks.gtn.entities.Game;
+import com.michaniks.gtn.entities.Guess;
 
 @Stateless
 public class GameServiceImpl implements GameService {
 	
 	@EJB
 	private GameDAO gameDao;
+	
+	@EJB
+	private GuessService guessService;
 	
 	@Override						
 	public Game createGame(String name) {
@@ -20,7 +23,7 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public Guess checkGuess(Guess guess) {
-		return GuessChecker.checkGuess(guess);
+		return guessService.checkGuess(guess);
 	}
 	
 }
