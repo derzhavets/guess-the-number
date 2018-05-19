@@ -3,6 +3,7 @@ package com.michaniks.gtn.entities;
 public class Guess {
 	
 	private Integer gameId;
+	private int guessNumber;
 	private int guessedNumber;
 	private int correctNumbers;
 	private int correctPositions;
@@ -39,6 +40,14 @@ public class Guess {
 
 	public Integer getGameId() {
 		return gameId;
+	}
+
+	public void setGuessNumber(int guessNumber) {
+		this.guessNumber = guessNumber;
+	}
+
+	public int getGuessNumber() {
+		return guessNumber;
 	}
 	
 }

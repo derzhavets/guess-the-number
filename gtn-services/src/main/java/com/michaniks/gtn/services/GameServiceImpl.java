@@ -1,5 +1,7 @@
 package com.michaniks.gtn.services;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -38,6 +40,16 @@ public class GameServiceImpl implements GameService {
 			return GameStatus.GAME_ID_NOT_FOUND;
 		} else {
 			return game.getStatus();
+		}
+	}
+
+	@Override
+	public List<Guess> getGuessesForGame(int gameId) {
+		Game game = gameDao.getGame(gameId);
+		if (game != null) {
+			return game.getGuesses();
+		} else {
+			return null;
 		}
 	}
 	

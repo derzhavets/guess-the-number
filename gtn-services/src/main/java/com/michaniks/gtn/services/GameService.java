@@ -1,5 +1,7 @@
 package com.michaniks.gtn.services;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import com.michaniks.gtn.entities.Game;
@@ -14,5 +16,7 @@ public interface GameService {
 	Guess checkGuess(Guess guess);
 
 	GameStatus getGameStatus(int gameId);
+
+	List<Guess> getGuessesForGame(int gameId);
 
 }

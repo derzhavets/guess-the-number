@@ -1,12 +1,14 @@
 package com.michaniks.gtn.services;
 
+import static com.michaniks.gtn.helpers.GameStatus.GUESS_NUMBER_EXCEEDED;
+import static com.michaniks.gtn.helpers.GameStatus.WON;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.michaniks.gtn.dao.GameDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
-import com.michaniks.gtn.helpers.GameStatus;
 
 @Stateless
 public class GuessServiceImpl implements GuessService {
@@ -17,17 +19,19 @@ public class GuessServiceImpl implements GuessService {
 	@Override
 	public Guess checkGuess(Guess guess) {
 		Game game = gameDao.getGame(guess.getGameId());
-		checkNumberAndUpdateGuess(guess);
-		if (game.updateStatus(guess) != GameStatus.GUESS_NUMBER_EXCEEDED) 
-			game.addGuess(guess);
+		checkNumberAndUpdateGuess(game, guess);
+		if (game.getStatus() != GUESS_NUMBER_EXCEEDED && game.getStatus() != WON) {
+				game.updateStatus(guess);
+				game.addGuess(guess);
+			
+		}
+		guess.setGuessNumber(game.getGuesses().indexOf(guess) + 1);
 		return guess;
 	}
 	
-	private Guess checkNumberAndUpdateGuess(Guess guess) {
+	private Guess checkNumberAndUpdateGuess(Game game, Guess guess) {
 		Integer[] guessedNumberArray = convertToArray(guess.getGuessedNumber());
-		Integer[] numberToGuess = gameDao
-				.getGame(guess.getGameId())
-				.getNumberToGuess();
+		Integer[] numberToGuess = game.getNumberToGuess();
 		
 		for (int i = 0; i < numberToGuess.length; i++) {
 			for (int j = 0; j < guessedNumberArray.length; j++) {

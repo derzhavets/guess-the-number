@@ -1,5 +1,7 @@
 package com.michaniks.gtn.web.controllers;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -38,5 +40,12 @@ public class GameController {
 				.ok(gameService.checkGuess(guess))
 				.header("Game-Status", gameService.getGameStatus(guess.getGameId()))
 				.build();
+	}
+	
+	@Path("/getAllGuesses/{id}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Guess> getAllGuesses(@PathParam("id") int gameId) {
+		return gameService.getGuessesForGame(gameId);
 	}
 }
