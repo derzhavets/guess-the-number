@@ -4,7 +4,9 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.michaniks.gtn.dao.GameDAO;
+import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
+import com.michaniks.gtn.helpers.GameStatus;
 
 @Stateless
 public class GuessServiceImpl implements GuessService {
@@ -14,15 +16,19 @@ public class GuessServiceImpl implements GuessService {
 	
 	@Override
 	public Guess checkGuess(Guess guess) {
-		checkNumber(guess);
+		Game game = gameDao.getGame(guess.getGameId());
+		checkNumberAndUpdateGuess(guess);
+		if (game.updateStatus(guess) != GameStatus.GUESS_NUMBER_EXCEEDED) 
+			game.addGuess(guess);
 		return guess;
 	}
 	
-	private Guess checkNumber(Guess guess) {
+	private Guess checkNumberAndUpdateGuess(Guess guess) {
 		Integer[] guessedNumberArray = convertToArray(guess.getGuessedNumber());
 		Integer[] numberToGuess = gameDao
 				.getGame(guess.getGameId())
 				.getNumberToGuess();
+		
 		for (int i = 0; i < numberToGuess.length; i++) {
 			for (int j = 0; j < guessedNumberArray.length; j++) {
 				if (guessedNumberArray[j] == numberToGuess[i] && i == j) {

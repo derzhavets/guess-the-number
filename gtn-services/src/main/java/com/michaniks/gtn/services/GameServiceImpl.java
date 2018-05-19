@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import com.michaniks.gtn.dao.GameDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
+import com.michaniks.gtn.helpers.GameStatus;
 
 @Stateless
 public class GameServiceImpl implements GameService {
@@ -23,7 +24,21 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public Guess checkGuess(Guess guess) {
-		return guessService.checkGuess(guess);
+		if (gameDao.getGame(guess.getGameId()) != null) {
+			return guessService.checkGuess(guess);
+		} else {
+			return guess;
+		}
+	}
+
+	@Override
+	public GameStatus getGameStatus(int gameId) {
+		Game game = gameDao.getGame(gameId);
+		if (game == null) {
+			return GameStatus.GAME_ID_NOT_FOUND;
+		} else {
+			return game.getStatus();
+		}
 	}
 	
 }
