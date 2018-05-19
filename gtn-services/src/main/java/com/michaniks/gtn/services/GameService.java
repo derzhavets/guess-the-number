@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
+import com.michaniks.gtn.entities.Score;
 import com.michaniks.gtn.helpers.GameStatus;
 
 @Local
@@ -18,5 +19,7 @@ public interface GameService {
 	GameStatus getGameStatus(int gameId);
 
 	List<Guess> getGuessesForGame(int gameId);
+
+	List<Score> getAllScores();
 
 }

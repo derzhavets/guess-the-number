@@ -11,11 +11,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
+import com.michaniks.gtn.dao.ScoresDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
-import com.michaniks.gtn.helpers.GameStatus;
+import com.michaniks.gtn.entities.Score;
 import com.michaniks.gtn.services.GameService;
 
 @Path("/game")
@@ -23,6 +23,9 @@ public class GameController {
 	
 	@EJB
 	private GameService gameService;
+	
+	@EJB
+	private ScoresDAO scoresDao;
 	
 	@Path("/new/{playerName}")
 	@GET
@@ -47,5 +50,12 @@ public class GameController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Guess> getAllGuesses(@PathParam("id") int gameId) {
 		return gameService.getGuessesForGame(gameId);
+	}
+	
+	@Path("/getAllScores")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Score> getAllScores() {
+		return scoresDao.getAll();
 	}
 }

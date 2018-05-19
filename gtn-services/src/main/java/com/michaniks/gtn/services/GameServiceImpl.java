@@ -6,8 +6,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.michaniks.gtn.dao.GameDAO;
+import com.michaniks.gtn.dao.ScoresDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
+import com.michaniks.gtn.entities.Score;
 import com.michaniks.gtn.helpers.GameStatus;
 
 @Stateless
@@ -18,6 +20,9 @@ public class GameServiceImpl implements GameService {
 	
 	@EJB
 	private GuessService guessService;
+	
+	@EJB
+	private ScoresDAO scoresDao;
 	
 	@Override						
 	public Game createGame(String name) {
@@ -51,6 +56,11 @@ public class GameServiceImpl implements GameService {
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public List<Score> getAllScores() {
+		return scoresDao.getAll();
 	}
 	
 }
