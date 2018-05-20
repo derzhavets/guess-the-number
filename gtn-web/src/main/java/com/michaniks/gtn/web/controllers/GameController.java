@@ -12,11 +12,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.michaniks.gtn.dao.ScoresDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
 import com.michaniks.gtn.entities.Score;
 import com.michaniks.gtn.services.GameService;
+import com.michaniks.gtn.services.ScoreService;
 
 @Path("/game")
 public class GameController {
@@ -25,7 +25,7 @@ public class GameController {
 	private GameService gameService;
 	
 	@EJB
-	private ScoresDAO scoresDao;
+	private ScoreService scoreService;
 	
 	@Path("/new/{playerName}")
 	@GET
@@ -52,10 +52,10 @@ public class GameController {
 		return gameService.getGuessesForGame(gameId);
 	}
 	
-	@Path("/getAllScores")
+	@Path("/getBestScores")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Score> getAllScores() {
-		return scoresDao.getAll();
+		return scoreService.getTopTen();
 	}
 }
