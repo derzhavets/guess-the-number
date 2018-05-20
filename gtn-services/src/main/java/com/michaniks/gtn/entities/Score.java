@@ -10,12 +10,19 @@ import javax.persistence.Table;
 @Entity @Table(name = "scores")
 public class Score {
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "score_id")
 	private Long id;
 	
 	private String player_name;
 	private int player_score;
+	
+	public Score(String player_name, int player_score) {
+		this.player_name = player_name;
+		this.player_score = player_score;
+	}
+
+	public Score() {}
 	
 	public Long getId() {
 		return id;

@@ -1,14 +1,16 @@
 package com.michaniks.gtn.services;
 
-import static com.michaniks.gtn.helpers.GameStatus.GUESS_NUMBER_EXCEEDED;
 import static com.michaniks.gtn.helpers.GameStatus.WON;
+import static com.michaniks.gtn.helpers.GameStatus.CONTINUES;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.michaniks.gtn.dao.GameDAO;
+import com.michaniks.gtn.dao.ScoresDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
+import com.michaniks.gtn.entities.Score;
 
 @Stateless
 public class GuessServiceImpl implements GuessService {
@@ -16,16 +18,21 @@ public class GuessServiceImpl implements GuessService {
 	@EJB
 	private GameDAO gameDao;
 	
+	@EJB
+	private ScoresDAO scoresDao;
+	
 	@Override
 	public Guess checkGuess(Guess guess) {
 		Game game = gameDao.getGame(guess.getGameId());
 		checkNumberAndUpdateGuess(game, guess);
-		if (game.getStatus() != GUESS_NUMBER_EXCEEDED && game.getStatus() != WON) {
+		if (game.getStatus() == CONTINUES) {
 				game.updateStatus(guess);
 				game.addGuess(guess);
-			
+				guess.setGuessNumber(game.getGuesses().indexOf(guess) + 1);
+		} 
+		if (game.getStatus() == WON) {
+			scoresDao.save(new Score(game.getPlayerName(), game.getGuesses().size()));
 		}
-		guess.setGuessNumber(game.getGuesses().indexOf(guess) + 1);
 		return guess;
 	}
 	
