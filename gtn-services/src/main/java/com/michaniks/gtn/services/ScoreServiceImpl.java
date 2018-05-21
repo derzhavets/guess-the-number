@@ -20,6 +20,7 @@ public class ScoreServiceImpl implements ScoreService {
 	public List<Score> getTopTen() {
 		return scoresDao.getAll().stream()
 				.sorted(Comparator.comparing(Score::getPlayer_score))
-				.collect(Collectors.toList());
+				.collect(Collectors.toList())
+				.subList(0, 9);
 	}
 }
