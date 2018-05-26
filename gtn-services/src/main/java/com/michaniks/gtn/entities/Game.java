@@ -47,6 +47,10 @@ public class Game {
 	public GameStatus getStatus() {
 		return status;
 	}
+	
+	public void setStatus(GameStatus status) {
+		this.status = status;
+	}
 
 	public GameStatus updateStatus(Guess guess) {
 		if (guesses.size() > 20) {

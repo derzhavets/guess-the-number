@@ -1,7 +1,8 @@
 package com.michaniks.gtn.services;
 
-import static com.michaniks.gtn.helpers.GameStatus.WON;
 import static com.michaniks.gtn.helpers.GameStatus.CONTINUES;
+import static com.michaniks.gtn.helpers.GameStatus.WON;
+import static com.michaniks.gtn.helpers.GameStatus.WON_AND_SAVED;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -32,6 +33,7 @@ public class GuessServiceImpl implements GuessService {
 		} 
 		if (game.getStatus() == WON) {
 			scoresDao.save(new Score(game.getPlayerName(), game.getGuesses().size()));
+			game.setStatus(WON_AND_SAVED);
 		}
 		return guess;
 	}
