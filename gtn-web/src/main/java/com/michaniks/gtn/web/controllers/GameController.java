@@ -12,12 +12,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
 import com.michaniks.gtn.entities.Score;
+import com.michaniks.gtn.helpers.GameNotFoundException;
+import com.michaniks.gtn.helpers.GameStatus;
 import com.michaniks.gtn.services.GameService;
 import com.michaniks.gtn.services.ScoreService;
 
@@ -43,17 +46,24 @@ public class GameController {
 	@ValidateRequest
 	@Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	public Response makeGuess(@Valid Guess guess) {
-		return Response
-				.ok(gameService.checkGuess(guess))
-				.header("Game-Status", gameService.getGameStatus(guess.getGameId()))
-				.build();
+		try {
+			return Response.ok(gameService.checkGuess(guess))
+					.header("Game-Status", gameService.getGameStatus(guess.getGameId()))
+					.build();
+		} catch (GameNotFoundException e) {
+			return Response.status(Status.NOT_FOUND).build();
+		}
 	}
 	
 	@Path("/getAllGuesses/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Guess> getAllGuesses(@PathParam("id") int gameId) {
-		return gameService.getGuessesForGame(gameId);
+	public Response getAllGuesses(@PathParam("id") int gameId) {
+		try {
+			return Response.ok(gameService.getGuessesForGame(gameId)).build();
+		} catch (GameNotFoundException e) {
+			return Response.status(Status.NOT_FOUND).build();
+		}
 	}
 	
 	@Path("/getBestScores")

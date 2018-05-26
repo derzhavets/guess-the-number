@@ -12,6 +12,7 @@ import com.michaniks.gtn.dao.ScoresDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
 import com.michaniks.gtn.entities.Score;
+import com.michaniks.gtn.helpers.GameNotFoundException;
 
 @Stateless
 public class GuessServiceImpl implements GuessService {
@@ -23,7 +24,7 @@ public class GuessServiceImpl implements GuessService {
 	private ScoresDAO scoresDao;
 	
 	@Override
-	public Guess checkGuess(Guess guess) {
+	public Guess checkGuess(Guess guess) throws GameNotFoundException {
 		Game game = gameDao.getGame(guess.getGameId());
 		checkNumberAndUpdateGuess(game, guess);
 		if (game.getStatus() == CONTINUES) {

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.ejb.Singleton;
 
 import com.michaniks.gtn.entities.Game;
+import com.michaniks.gtn.helpers.GameNotFoundException;
 import com.michaniks.gtn.helpers.NumberGenerator;
 
 @Singleton
@@ -22,8 +23,12 @@ public class GameDAOImpl implements GameDAO {
 	}
 
 	@Override
-	public Game getGame(Integer id) {
-		return games.get(id);
+	public Game getGame(Integer id) throws GameNotFoundException {
+			if (games.get(id) != null) {
+				return games.get(id);
+			} else {
+				throw new GameNotFoundException();
+			}
 	}
 	
 }

@@ -10,6 +10,7 @@ import com.michaniks.gtn.dao.ScoresDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
 import com.michaniks.gtn.entities.Score;
+import com.michaniks.gtn.helpers.GameNotFoundException;
 import com.michaniks.gtn.helpers.GameStatus;
 
 @Stateless
@@ -30,32 +31,18 @@ public class GameServiceImpl implements GameService {
 	}
 
 	@Override
-	public Guess checkGuess(Guess guess) {
-		if (gameDao.getGame(guess.getGameId()) != null) {
-			return guessService.checkGuess(guess);
-		} else {
-			return guess;
-		}
+	public Guess checkGuess(Guess guess) throws GameNotFoundException {
+		return guessService.checkGuess(guess);			
 	}
 
 	@Override
-	public GameStatus getGameStatus(int gameId) {
-		Game game = gameDao.getGame(gameId);
-		if (game == null) {
-			return GameStatus.GAME_ID_NOT_FOUND;
-		} else {
-			return game.getStatus();
-		}
+	public GameStatus getGameStatus(int gameId) throws GameNotFoundException {
+		return gameDao.getGame(gameId).getStatus();
 	}
 
 	@Override
-	public List<Guess> getGuessesForGame(int gameId) {
-		Game game = gameDao.getGame(gameId);
-		if (game != null) {
-			return game.getGuesses();
-		} else {
-			return null;
-		}
+	public List<Guess> getGuessesForGame(int gameId) throws GameNotFoundException {
+		return gameDao.getGame(gameId).getGuesses();
 	}
 	
 	@Override
