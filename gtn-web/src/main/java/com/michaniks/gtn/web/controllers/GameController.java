@@ -1,7 +1,5 @@
 package com.michaniks.gtn.web.controllers;
 
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -18,20 +16,14 @@ import org.jboss.resteasy.spi.validation.ValidateRequest;
 
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
-import com.michaniks.gtn.entities.Score;
 import com.michaniks.gtn.helpers.GameNotFoundException;
-import com.michaniks.gtn.helpers.GameStatus;
 import com.michaniks.gtn.services.GameService;
-import com.michaniks.gtn.services.ScoreService;
 
 @Path("/game")
 public class GameController {
 	
 	@EJB
 	private GameService gameService;
-	
-	@EJB
-	private ScoreService scoreService;
 	
 	@Path("/new/{playerName}")
 	@GET
@@ -66,10 +58,4 @@ public class GameController {
 		}
 	}
 	
-	@Path("/getBestScores")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Score> getAllScores() {
-		return scoreService.getTopTen();
-	}
 }
