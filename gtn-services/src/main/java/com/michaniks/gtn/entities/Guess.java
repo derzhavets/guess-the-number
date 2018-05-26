@@ -1,14 +1,23 @@
 package com.michaniks.gtn.entities;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class Guess {
 	
+	@NotNull
 	private Integer gameId;
-	private int guessNumber;
+	
+	@Min(1000) @Max(9999)
 	private int guessedNumber;
+	
+	private int guessNumber;
 	private int correctNumbers;
 	private int correctPositions;
-	
-	public Guess() {}
+
+	public Guess() {
+	}
 
 	public Guess(Integer gameId) {
 		this.gameId = gameId;
@@ -17,7 +26,7 @@ public class Guess {
 	public int getGuessedNumber() {
 		return guessedNumber;
 	}
-	
+
 	public int getCorrectNumbers() {
 		return correctNumbers;
 	}
@@ -29,7 +38,7 @@ public class Guess {
 	public void setGuessedNumber(int guessedNumber) {
 		this.guessedNumber = guessedNumber;
 	}
-	
+
 	public void incrementCorrectNumbers() {
 		this.correctNumbers++;
 	}
@@ -49,5 +58,5 @@ public class Guess {
 	public int getGuessNumber() {
 		return guessNumber;
 	}
-	
+
 }
