@@ -21,10 +21,10 @@ import com.michaniks.gtn.services.GameService;
 
 @Path("/game")
 public class GameController {
-	
+
 	@EJB
 	private GameService gameService;
-	
+
 	@Path("/new/{playerName}")
 	@GET
 	public Integer createNewGame(@PathParam("playerName") String playerName) {
@@ -32,21 +32,22 @@ public class GameController {
 		System.out.println(g);
 		return g.getId();
 	}
-	
+
 	@Path("/makeGuess")
 	@POST
 	@ValidateRequest
-	@Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response makeGuess(@Valid Guess guess) {
 		try {
 			return Response.ok(gameService.checkGuess(guess))
 					.header("Game-Status", gameService.getGameStatus(guess.getGameId()))
-					.build();
+					.header("Access-Control-Expose-Headers", "Game-Status").build();
 		} catch (GameNotFoundException e) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
-	
+
 	@Path("/getAllGuesses/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -57,5 +58,5 @@ public class GameController {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
-	
+
 }

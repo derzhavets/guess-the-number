@@ -6,7 +6,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import com.michaniks.gtn.dao.GameDAO;
-import com.michaniks.gtn.dao.ScoresDAO;
 import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
 import com.michaniks.gtn.helpers.GameNotFoundException;
@@ -20,9 +19,6 @@ public class GameServiceImpl implements GameService {
 
 	@EJB
 	private GuessService guessService;
-
-	@EJB
-	private ScoresDAO scoresDao;
 
 	@Override
 	public Game createGame(String name) {
