@@ -1,9 +1,5 @@
 package com.michaniks.gtn.entities;
 
-import static com.michaniks.gtn.helpers.GameStatus.CONTINUES;
-import static com.michaniks.gtn.helpers.GameStatus.GUESS_NUMBER_EXCEEDED;
-import static com.michaniks.gtn.helpers.GameStatus.WON;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,16 +46,6 @@ public class Game {
 	
 	public void setStatus(GameStatus status) {
 		this.status = status;
-	}
-
-	public GameStatus updateStatus(Guess guess) {
-		if (guesses.size() > 20) {
-			return status = GUESS_NUMBER_EXCEEDED;
-		} else if (guess.getCorrectPositions() == 4) {
-			return status = WON;
-		} else {
-			return status = CONTINUES;
-		}
 	}
 
 	public void addGuess(Guess g) {

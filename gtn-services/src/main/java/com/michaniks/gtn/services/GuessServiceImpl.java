@@ -13,6 +13,7 @@ import com.michaniks.gtn.entities.Game;
 import com.michaniks.gtn.entities.Guess;
 import com.michaniks.gtn.entities.Score;
 import com.michaniks.gtn.helpers.GameNotFoundException;
+import com.michaniks.gtn.helpers.GameStatus;
 
 @Stateless
 public class GuessServiceImpl implements GuessService {
@@ -28,7 +29,7 @@ public class GuessServiceImpl implements GuessService {
 		Game game = gameDao.getGame(guess.getGameId());
 		checkNumberAndUpdateGuess(game, guess);
 		if (game.getStatus() == CONTINUES) {
-			game.updateStatus(guess);
+			GameStatus.update(game, guess);
 			game.addGuess(guess);
 			guess.setGuessNumber(game.getGuesses().indexOf(guess) + 1);
 		}

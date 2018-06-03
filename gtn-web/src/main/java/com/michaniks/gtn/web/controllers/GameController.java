@@ -42,7 +42,8 @@ public class GameController {
 		try {
 			return Response.ok(gameService.checkGuess(guess))
 					.header("Game-Status", gameService.getGameStatus(guess.getGameId()))
-					.header("Access-Control-Expose-Headers", "Game-Status").build();
+					.header("Access-Control-Expose-Headers", "Game-Status")
+					.build();
 		} catch (GameNotFoundException e) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
