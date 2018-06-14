@@ -45,6 +45,10 @@ function postGuess(guess) {
       } else if (status == "WON_AND_SAVED") {
         getAllGuesses();
         showScoreTable();
+      }else if (status == "GUESS_NUMBER_EXCEEDED"){
+          attemptsEnded();
+          getAllGuesses();
+          
       }
     }
   }
@@ -131,3 +135,13 @@ function toggleButtons() {
 function element(id) {
   return document.getElementById(id);
 }
+
+function attemptsEnded(){
+     element("game-header").innerHTML = "The attempts ended";
+    toggleButtons();
+    
+}
+
+
+
+
